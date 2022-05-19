@@ -11,6 +11,11 @@
                 <componentName>propsDemo</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>challenge_currentDateTime</componentName>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>bottomLeft</name>
         <type>Region</type>
