@@ -1,7 +1,7 @@
 public with sharing class StudentBrowserForm {
     @AuraEnabled(cacheable=true)
     public static List<User> getInstructors() {
-		return [SELECT Id, Name FROM User WHERE Is_Instructor__c = true ORDER BY Name];
+		return [SELECT Id, Name FROM User WHERE Is_Instructor__c = true WITH SECURITY_ENFORCED ORDER BY Name];
     }
 
     @AuraEnabled(cacheable=true)
@@ -14,6 +14,7 @@ public with sharing class StudentBrowserForm {
 				SELECT Id, Start_Date__c, Location__c, Attendee_Count__c
 				FROM Course_Delivery__c
 				WHERE Instructor__c = :instructorId AND Status__c IN ('Enrolled','Completed','Delivered','Scheduled')
+				WITH SECURITY_ENFORCED
 				ORDER BY Start_Date__c DESC
 			];
 		}
