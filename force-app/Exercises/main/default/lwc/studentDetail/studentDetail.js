@@ -3,20 +3,21 @@ import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService
 import  SELECTED_STUDENT_CHANNEL  from '@salesforce/messageChannel/SelectedStudentChannel__c';
 
 // TODO #1: import the reduceErrors function from the c/ldsUtils component.
+import {reduceErrors} from 'c/ldsUtils';
 
 // TODO #2: import the getRecord, getFieldValue, and getFieldDisplayValue functions from lightning/uiRecordApi.
 import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
 
 // TODO #3: We've imported the name field and placed it into an array for you.
 //          To prepare for Lab 1, import the Description, Email, and Phone fields and add them to the array.
-
+import { NavigationMixin } from 'lightning/navigation';
 import FIELD_Name from '@salesforce/schema/Contact.Name';
 import FIELD_Description from '@salesforce/schema/Contact.Description';
 import FIELD_Email from '@salesforce/schema/Contact.Email';
 import FIELD_Phone from '@salesforce/schema/Contact.Phone';
 const fields = [FIELD_Name, FIELD_Description, FIELD_Email, FIELD_Phone];
 
-export default class StudentDetail extends LightningElement {
+export default class StudentDetail extends NavigationMixin(LightningElement) {
 	subscription;
 
 	// TODO #4: locate a valid Contact ID in your scratch org and store it in the studentId property.
@@ -86,5 +87,14 @@ export default class StudentDetail extends LightningElement {
 	_getDisplayValue(data, field) {
 		return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data, field);
 	}
-	
+
+	onGoToRecord(event) {
+		this[NavigationMixin.Navigate]({
+			type: 'standard__recordPage',
+			attributes: {
+				recordId: this.studentId,
+				actionName: 'view'
+			},
+		});
+	}
 }
