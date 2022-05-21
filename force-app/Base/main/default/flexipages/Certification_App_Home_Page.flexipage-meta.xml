@@ -34,6 +34,11 @@
                 <componentName>flexipage:richText</componentName>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>challenge_recentDeliveries</componentName>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>bottomRight</name>
         <type>Region</type>
