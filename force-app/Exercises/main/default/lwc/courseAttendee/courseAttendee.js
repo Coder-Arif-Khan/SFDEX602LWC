@@ -1,4 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
+import Utils from 'c/utils';
 import { NavigationMixin } from 'lightning/navigation';
 import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
 import FIELD_CourseName from '@salesforce/schema/Course_Attendee__c.Course_Delivery__r.Course__r.Name';
@@ -16,14 +17,14 @@ export default class CourseAttendee extends NavigationMixin(LightningElement) {
 	@wire(getRecord, { recordId: '$recordId', fields })
 	wiredMap({ error, data }) {
 		if (data) {
-			const courseName = this._getDisplayValue(data, FIELD_CourseName);
-			const startDate = this._getDisplayValue(data, FIELD_StartDate);
+			const courseName = Utils.getDisplayValue(data, FIELD_CourseName);
+			const startDate = Utils.getDisplayValue(data, FIELD_StartDate);
 			this.attendee = {
 				cardTitle: `${courseName} on ${startDate}`,
-				studentId: this._getDisplayValue(data, FIELD_StudentId),
+				studentId: Utils.getDisplayValue(data, FIELD_StudentId),
 				studentTile: {
-					Name: this._getDisplayValue(data, FIELD_StudentName),
-					PhotoUrl: this._getDisplayValue(data, FIELD_StudentPict),
+					Name: Utils.getDisplayValue(data, FIELD_StudentName),
+					PhotoUrl: Utils.getDisplayValue(data, FIELD_StudentPict),
 				}
 			};
 			this.error = undefined;
@@ -42,9 +43,5 @@ export default class CourseAttendee extends NavigationMixin(LightningElement) {
 				actionName: 'edit'
 			}
 		});
-	}
-
-	_getDisplayValue(data, field) {
-		return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data, field);
 	}
 }

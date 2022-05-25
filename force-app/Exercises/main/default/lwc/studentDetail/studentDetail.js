@@ -1,4 +1,5 @@
 import { LightningElement, wire } from 'lwc';
+import Utils from 'c/utils';
 import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
 import  SELECTED_STUDENT_CHANNEL  from '@salesforce/messageChannel/SelectedStudentChannel__c';
 
@@ -6,7 +7,7 @@ import  SELECTED_STUDENT_CHANNEL  from '@salesforce/messageChannel/SelectedStude
 import {reduceErrors} from 'c/ldsUtils';
 
 // TODO #2: import the getRecord, getFieldValue, and getFieldDisplayValue functions from lightning/uiRecordApi.
-import { getRecord, getFieldValue, getFieldDisplayValue } from 'lightning/uiRecordApi';
+import { getRecord } from 'lightning/uiRecordApi';
 
 // TODO #3: We've imported the name field and placed it into an array for you.
 //          To prepare for Lab 1, import the Description, Email, and Phone fields and add them to the array.
@@ -53,19 +54,19 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 	}
 
 	get name() {
-		return this._getDisplayValue(this.wiredStudent.data, FIELD_Name);
+		return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Name);
 	}
 
 	//TODO #6: We provided a getter for the name field. 
 	// 		   To prepare for Lab 1, create getters for the description, phone, and email fields.
   get description() {
-    return this._getDisplayValue(this.wiredStudent.data, FIELD_Description);
+    return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Description);
   }
   get phone() {
-    return this._getDisplayValue(this.wiredStudent.data, FIELD_Phone);
+    return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Phone);
   }
   get email() {
-    return this._getDisplayValue(this.wiredStudent.data, FIELD_Email);
+    return Utils.getDisplayValue(this.wiredStudent.data, FIELD_Email);
   }
 	
 	//TODO #7: Review the errorMessages getter, the cardTitle getter, and the _getDisplayValue function below.
@@ -82,10 +83,6 @@ export default class StudentDetail extends NavigationMixin(LightningElement) {
 			title = "Something went wrong..."
 		}
 		return title;
-	}
-	
-	_getDisplayValue(data, field) {
-		return getFieldDisplayValue(data, field) ? getFieldDisplayValue(data, field) : getFieldValue(data, field);
 	}
 
 	onGoToRecord(event) {
