@@ -1,4 +1,5 @@
 import { LightningElement, api, wire } from "lwc";
+import LABEL_FEATURE_NOT_AVAILABLE from '@salesforce/label/c.Feature_Not_Available';
 import Utils from "c/utils";
 import getCertifiedStudents from "@salesforce/apex/CertifiedStudentList.getCertifiedStudents";
 import deleteStudentCertification from "@salesforce/apex/CertifiedStudentList.deleteStudentCertification";
@@ -95,6 +96,6 @@ export default class CertifiedStudentList extends LightningElement {
 	}
 
 	notAvailable() {
-		Utils.showModal(this,'Not Available', 'This feature is currently unavailable');
+		Utils.showModal(this,'Not Available', LABEL_FEATURE_NOT_AVAILABLE);
 	}
 }
