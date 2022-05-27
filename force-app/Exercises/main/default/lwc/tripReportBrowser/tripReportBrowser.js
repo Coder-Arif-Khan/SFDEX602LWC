@@ -2,7 +2,6 @@ import { LightningElement } from 'lwc';
 import getAll from '@salesforce/apex/TripReportBrowser.getAll';
 
 export default class TripReportBrowser extends LightningElement {
-	selectedRecordId = 0;
 	cols = [
 		{
 			fieldName:'Date__c', 
@@ -28,6 +27,7 @@ export default class TripReportBrowser extends LightningElement {
 	];
 
 	tripReports;
+	selectedRecordId=0;
 
 	connectedCallback() {
 		getAll()
@@ -47,23 +47,33 @@ export default class TripReportBrowser extends LightningElement {
 			} 
 		});
 	}
-	
-
-	changeTripReportMode(newMode) {
-		const eventDetail = {
-		mode: newMode
-		}
-		if (newMode === 'edit') {
-		eventDetail.Id = this.selectedRecordId;
-		}
-
-		const evt = new CustomEvent('tripreportmodechange', {
-			detail: eventDetail
-			});
-			this.dispatchEvent(evt);
-	}
 
 	onBtnNewClick() {
 		this.changeTripReportMode('add');
 	}
+
+	handleRowClick(event) {
+		this.selectedRecordId = event.detail.pk;
+	}
+
+	handleRowDblClick() {
+		this.changeTripReportMode('edit');
+	}
+
+	changeTripReportMode(newMode) {
+		let eventDetail = {
+			mode: newMode
+		}
+		if (newMode === 'edit') {
+			eventDetail.Id = this.selectedRecordId;
+		}
+		const evt = new CustomEvent('tripreportmodechange', {
+			detail: eventDetail
+		});
+		this.dispatchEvent(evt);
+		
+	}
+	
+	
+
 }
